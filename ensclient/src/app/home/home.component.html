@@ -1,0 +1,22 @@
+<div *ngIf="(this.processObs$ | async) as process">
+
+  <div class="super-claim-details grey-bg">
+
+    <span class="column">
+      <span>תביעת על: </span>
+      <span>{{process?.superClaim?.superClaimNumber}}</span>
+    </span>
+
+    <span class="column">
+      <span>מצב תביעה: </span>
+      <span>{{process?.superClaim?.superClaimStatus?.value}}</span>
+    </span>
+
+    <div class="button" (click)="refreshProcess()">רענון תהליך</div>
+  </div>
+
+  <app-process-details [process]="process"></app-process-details>
+  <app-contact-persons [persons]="process.contactPersons"></app-contact-persons>
+  <app-contact-persons-list [persons]="process.contactPersons"></app-contact-persons-list>
+
+</div>

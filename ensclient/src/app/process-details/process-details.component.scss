@@ -1,0 +1,79 @@
+.process-details-container {
+  margin-top: 5px;
+
+  ::ng-deep .mat-form-field-infix {
+    width: auto;
+  }
+
+  ::ng-deep .mat-datepicker-toggle .mat-icon-button {
+    border: 1px yellow solid;
+    width: 20px;
+    height: 20px;
+  }
+
+  .row {
+    display: flex;
+  }
+
+  .row-edit {
+    @extend .row;
+    height: 5em;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    padding: 1.7em;
+  }
+
+  .column {
+    margin-right: 2em;
+
+    select {
+      width: 8em;
+    }
+  }
+
+  .details-edit {
+     @extend .details;
+     padding-bottom: 1em;
+  }
+
+  .row-gap {
+    margin-top: 10px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .insured-name, .insured-id,
+  .insured-age, .insured-address {
+    margin-right: 3.5em;
+    margin-left: 3.5em;
+  }
+
+  .insured-name-label {
+    margin-right: 8.8em;
+    margin-left: 5.8em;
+  }
+
+  .insured-id-label {
+    margin-right: 3.5em;
+    margin-left: 7.9em;
+  }
+
+  .insured-age-label {
+    margin-right: 3.5em;
+    margin-left: 3.3em;
+  }
+
+  .insured-address-label {
+    margin-right: 3.5em;
+    margin-left: 3.5em;
+  }
+
+  .claim-datepicker {
+
+  }
+}

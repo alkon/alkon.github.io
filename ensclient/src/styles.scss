@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Arial, Roboto, "Helvetica Neue", sans-serif; }
+
+* {
+  direction: rtl;
+}
+
+.button {
+  background-color: darkslateblue;
+  color: white;
+  padding: 3px 30px;
+  margin-top: -3px;
+  border-radius: 3px;
+}
+
+.button:hover{
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.container-area {
+  margin-bottom: 5px;
+  border: lightskyblue solid 1px;
+}
+
+.title {
+  font-size: 17px;
+  font-weight: bold;
+
+  float: right;
+  width: 97.5%;
+  padding-right: 2.8em;
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+
+  background-color: #87D0FA;
+}
+
+.grey-bg {
+  background-color: lightgray;
+}
+

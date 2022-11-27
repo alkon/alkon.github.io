@@ -1,0 +1,33 @@
+.contact-persons-container {
+
+  //::ng-deep .mat-row:hover .mat-cell{
+  //  background-color: #fff5a2;
+  // }
+
+  .mat-row {
+    background-color: white;
+  }
+
+  .mat-row:nth-child(4n-1), .mat-row:nth-child(4n) {
+    background-color: #eee;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    padding: 1.7em;
+  }
+
+  .column {
+    margin-right: 2em;
+  }
+
+  .action-label {
+    margin-left: 2%;
+    margin-right: 7%;
+  }
+
+  .action-btn {
+    margin-right: 1%;
+  }
+}

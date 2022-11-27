@@ -1,0 +1,42 @@
+{
+  "superClaimDdList": [
+    {"val": 1, "desc": "התביעה אושרה"},
+    {"val": 2, "desc": "התביעה נדחתה"},
+    {"val": 4, "desc": "טרם התקבלה החלטה"}
+  ],
+
+  "claimCauseDdList": [
+    {"val": 1, "desc": "תאונה"},
+    {"val": 2, "desc": "מחלה"},
+    {"val": 5, "desc": "תאונת עבודה"},
+    {"val": 6, "desc": "אחר"}
+  ],
+
+  "injuryTypeDdList": [
+    {"val": 1, "desc": "אגן"},
+    {"val": 2, "desc": "גפיים"},
+    {"val": 5, "desc": "ראש"},
+    {"val": 6, "desc": "גב"},
+    {"val": 7, "desc": "לב"},
+    {"val": 7, "desc": "נפש"}
+  ],
+
+  "submittedByDdList": [
+    {"val": 1, "desc": "מבוטח"},
+    {"val": 2, "desc": "סוכן"},
+    {"val": 3, "desc": "בן/בת זוג"}
+  ],
+
+  "submissionMethodDdList": [
+    {"val": 1, "desc": "דואר"},
+    {"val": 2, "desc": "דיגיטל"},
+    {"val": 3, "desc": "פקס"}
+  ],
+
+  "identityTypesDdList": [
+    {"val": 1, "desc": "ת.ז"},
+    {"val": 2, "desc": "דרכון"},
+    {"val": 3, "desc": "מבוטח"},
+    {"val": 4, "desc": "מפעל"}
+  ]
+}

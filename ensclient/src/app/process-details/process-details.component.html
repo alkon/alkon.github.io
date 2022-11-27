@@ -1,0 +1,96 @@
+<div class="container-area process-details-container">
+  <div class="title">ריכוז מידע בתהליך</div>
+  <div class="details">
+    <div class="column">
+      <span>פרטי מבוטח: </span>
+      <span class="insured-name">{{process?.insured?.firstName}}  {{process?.insured?.lastName}}</span>
+      <span class="insured-age">{{process?.insured?.age}}</span>
+      <span class="insured-id">{{process?.insured?.identity}}</span>
+      <span class="insured-address">{{process?.insured?.address?.streetName}}, {{process?.insured?.address?.cityName}}</span>
+    </div>
+
+    <div class="column row-gap bold">
+      <span class="insured-name-label">שם</span>
+      <span class="insured-id-label">ת.ז.</span>
+      <span class="insured-age-label">גיל</span>
+      <span class="insured-address-label">כתובת</span>
+    </div>
+
+  </div>
+
+  <div *ngIf="(processDetailsObs$ | async) as processDetails">
+    <form [formGroup]="claimDetailsFormGrp" class="grey-bg">
+
+      <div class="row-edit">
+        <mat-form-field class="details-edit">
+          <div class="column">
+            <label>סוג תביעת על: </label>
+            <select name="superClaimDdList" formControlName="superClaimControl" (change)='onSuperClaimChange()'>
+              <option *ngFor="let superClaim of processDetails.superClaimDdList"
+                      [value]="superClaim.val">{{superClaim.desc}}
+              </option>
+            </select>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="details-edit">
+          <div class="column claim-datepicker">
+            <label>תאריך אירוע: </label>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <input name="claimDate" [matDatepicker]="picker" formControlName="claimDateControl" placeholder="הזן תאריך">
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </mat-form-field>
+      </div>
+
+      <div class="row-edit">
+        <mat-form-field class="details-edit">
+          <div class="column">
+            <label>סיבת אירוע: </label>
+            <select name="claimCauseDdList" formControlName="claimCauseControl">
+              <option *ngFor="let claimCause of processDetails.claimCauseDdList"
+                      [value]="claimCause.val">{{claimCause.desc}}
+              </option>
+            </select>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="details-edit">
+          <div class="column">
+            <label>מהות אירוע: </label>
+            <select name="injuryTypeDdList" formControlName="injuryTypeControl">
+              <option *ngFor="let injuryType of processDetails.injuryTypeDdList"
+                      [value]="injuryType.val">{{injuryType.desc}}
+              </option>
+            </select>
+          </div>
+        </mat-form-field>
+      </div>
+
+      <div class="row-edit">
+        <mat-form-field class="details-edit">
+          <div class="column">
+            <label>תביעה הוגשה באמצעות: </label>
+            <select name="submittedByDdList" formControlName="submittedByControl">
+              <option *ngFor="let submittedBy of processDetails.submittedByDdList"
+                      [value]="submittedBy.val">{{submittedBy.desc}}
+              </option>
+            </select>
+          </div>
+        </mat-form-field>
+
+        <mat-form-field class="details-edit">
+          <div class="column">
+            <label>אופן קבלת התביעה: </label>
+            <select name="submissionMethodDdList" formControlName="submissionMethodControl">
+              <option *ngFor="let submissionMethod of processDetails.submissionMethodDdList"
+                      [value]="submissionMethod.val">{{submissionMethod.desc}}
+              </option>
+            </select>
+          </div>
+        </mat-form-field>
+      </div>
+
+    </form>
+  </div>
+</div>

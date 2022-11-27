@@ -1,0 +1,52 @@
+<div class="container-area contact-persons-list-container">
+  <div class="title">אנשי קשר</div>
+  <div class="contact-persons-table">
+    <form [formGroup]="tableFormGrp">
+      <ng-container formArrayName="rowsArr">
+        <table #cpTable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> שם איש קשר</th>
+            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+              <mat-form-field  [ngClass]="editable(i) ? 'name-column-edit' : 'name-column'"
+                   appearance="{{fieldAppearance(i)}}">
+                <input matInput type="text" formControlName="name" [readonly]="true">
+              </mat-form-field>
+          </ng-container>
+
+          <ng-container matColumnDef="address">
+            <th mat-header-cell *matHeaderCellDef> כתובת</th>
+            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+              <mat-form-field class="address-column" appearance="{{fieldAppearance(i)}}">
+                <input matInput type="text" formControlName="address" [readonly]="true">
+              </mat-form-field>
+          </ng-container>
+
+          <ng-container matColumnDef="phoneNumber">
+            <th mat-header-cell *matHeaderCellDef> טלפון נייד</th>
+            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+              <mat-form-field class="phone-number-column" appearance="{{fieldAppearance(i)}}">
+                <input matInput type="text" formControlName="phoneNumber" [readonly]="true">
+              </mat-form-field>
+          </ng-container>
+
+          <ng-container matColumnDef="addButton">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+              <button *ngIf="editable(i)" (click)="setRowEditable(i, false)" class="btn btn-primary mr-5"> + </button>
+              <!--<mat-form-field class="add-btn" appearance="none">
+                <button (click)="setRowEditable(i, false)" formControlName="editable"
+                        class="btn btn-primary mr-5"> + </button>
+              </mat-form-field>-->
+          </ng-container>
+
+          <tr mat-header-row class="grey-bg" *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+        <button (click)="addContactPerson()" class="btn btn-primary mr-5">הוסף איש קשר</button>
+
+      </ng-container>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+//::ng-deep .mat-row {
+//  background-color: white;
+//}
+//
+//::ng-deep .mat-row:nth-child(4n-1), .mat-row:nth-child(4n) {
+//  background-color: #eee;
+//}
+
+
+.contact-persons-list-container {
+
+  .contact-persons-table {
+     margin-top: 3px;
+     margin-right: 2em;
+     width: 100%;
+  }
+
+  th.mat-header-cell, /*td.mat-cell, td.mat-footer-cell*/ {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: justify;
+  }
+
+  ::ng-deep .mat-row:nth-child(4n-1),
+  ::ng-deep tr.mat-row:nth-child(4n) {
+    background-color: green;
+  }
+
+  tr.mat-row {
+    background-color: white;
+  }
+
+  //tr.mat-row {
+    //height: 48px;
+    //background-color: red;
+    //color: red;
+  //}
+
+  //tr.mat-row:nth-child(4n-1), tr.mat-row:nth-child(4n) {
+    //background-color: red;
+  //}
+
+
+  tr.mat-row:hover {
+    //height: 48px;
+    background-color: #E9F9FA;
+  }
+
+  /*tr.mat-row:hover {
+    border: 1px solid blue;
+    border-radius: 10px;
+  }*/
+
+  ::ng-deep .mat-form-field-wrapper {
+    text-align: right;
+  }
+
+  .name-column {
+    width: 15em;
+  }
+
+  .name-column-edit {
+    @extend .name-column;
+
+    ::ng-deep .mat-form-field-wrapper {
+      border-bottom: 1px red solid;
+    }
+  }
+
+  .address-column {
+    width: 15em;
+  }
+
+  .phone-number-column {
+    width: 15em;
+  }
+}
