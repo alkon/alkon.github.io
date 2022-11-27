@@ -1,4 +1,4 @@
-<div class="container-area process-details-container">
+<div class="container-area process-details-container" *ngIf="process">
   <div class="title">ריכוז מידע בתהליך</div>
   <div class="details">
     <div class="column">
@@ -25,7 +25,7 @@
         <mat-form-field class="details-edit">
           <div class="column">
             <label>סוג תביעת על: </label>
-            <select name="superClaimDdList" formControlName="superClaimControl" (change)='onSuperClaimChange()'>
+            <select name="superClaimDdList" formControlName="superClaimControl">
               <option *ngFor="let superClaim of processDetails.superClaimDdList"
                       [value]="superClaim.val">{{superClaim.desc}}
               </option>
@@ -47,7 +47,7 @@
         <mat-form-field class="details-edit">
           <div class="column">
             <label>סיבת אירוע: </label>
-            <select name="claimCauseDdList" formControlName="claimCauseControl">
+            <select name="claimCauseDdList" formControlName="claimCauseControl" (change)="onClaimCauseChange()">
               <option *ngFor="let claimCause of processDetails.claimCauseDdList"
                       [value]="claimCause.val">{{claimCause.desc}}
               </option>
@@ -71,7 +71,7 @@
         <mat-form-field class="details-edit">
           <div class="column">
             <label>תביעה הוגשה באמצעות: </label>
-            <select name="submittedByDdList" formControlName="submittedByControl">
+            <select name="submittedByDdList" formControlName="submittedByControl" (change)="onSubmittedByChange($event)">
               <option *ngFor="let submittedBy of processDetails.submittedByDdList"
                       [value]="submittedBy.val">{{submittedBy.desc}}
               </option>

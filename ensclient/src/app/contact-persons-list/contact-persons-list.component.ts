@@ -14,24 +14,28 @@ export class ContactPersonsListComponent implements OnInit {
 
   @ViewChild(MatTable) cpTable!: MatTable<any>;
 
-  displayedColumns: string[] = ['name', 'address', 'phoneNumber', 'addButton'];
+  displayedColumns: string[] = ['deliveryFlag', 'name', 'type', 'address', 'phoneNumber', 'email', 'addButton'];
   dataSource = new MatTableDataSource<any>();
 
-  constructor(private _tableFb: FormBuilder, private _rowFb: FormBuilder) {}
+  constructor(private _tableFb: FormBuilder,
+              private _rowFb: FormBuilder) {}
 
   ngOnInit() {
     this.tableFormGrp = this._tableFb.group({
-       rowsFormControl: this._tableFb.array([])
+      rowsFormControl: this._tableFb.array([])
     });
 
     this.tableFormGrp = this._rowFb.group({
-       rowsArr: this._rowFb.array(this.persons.map(
-          (person: IContactPerson) => this._rowFb.group({
-            name: new FormControl(person.name),
-            phoneNumber: new FormControl(person.phoneNumber),
-            address: new FormControl(person.address),
-            editable: new FormControl(false),
-          })
+      rowsArr: this._rowFb.array(this.persons.map(
+        (person: IContactPerson) => this._rowFb.group({
+          deliveryFlag: new FormControl(person.deliveryFlag),
+          name: new FormControl(person.name),
+          type: new FormControl(person.type.value),
+          phoneNumber: new FormControl(person.phoneNumber),
+          address: new FormControl(person.address),
+          email: new FormControl(person.email),
+          editable: new FormControl(false),
+        })
       ))
     });
 
@@ -41,6 +45,14 @@ export class ContactPersonsListComponent implements OnInit {
 
   get rowsArr(): FormArray {
     return this.tableFormGrp.get('rowsArr') as FormArray;
+  }
+
+  rowFormGrp(index: number = 0): FormGroup {
+    return this.rowsArr.get(index + '') as FormGroup
+  }
+
+  typeFormControl(index: number = 0): FormControl {
+    return this.rowFormGrp(index).controls['type'].value;
   }
 
   renderTable() {
@@ -55,9 +67,12 @@ export class ContactPersonsListComponent implements OnInit {
 
   initEmptyRowForm(): FormGroup {
     return this._rowFb.group({
-      name: new FormControl(''),
-      phoneNumber: new FormControl(''),
-      address: new FormControl(''),
+      deliveryFlag: new FormControl(null),
+      name: new FormControl('', Validators.required),
+      submittedBy: new FormControl('', Validators.required),
+      phoneNumber: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
       editable: new FormControl(true),
     });
   }

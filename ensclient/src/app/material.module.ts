@@ -10,6 +10,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
   imports: [
@@ -25,7 +26,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
-
+    MatSnackBarModule,
   ],
   exports: [
     MatButtonModule,
@@ -40,10 +41,11 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatInputModule,
     MatSelectModule,
     MatTableModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill', floatLabelControl: 'auto'}},
-    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
   ],
 })
 export class AngularMaterialModule {

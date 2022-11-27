@@ -2,10 +2,11 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {IProcess} from '@app/model/data/process.model';
 import {IProcessDetails} from '@app/model/domain/process-details.model';
 import {MessageService} from '@app/services/message.service';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-process-details',
@@ -15,28 +16,38 @@ import {MessageService} from '@app/services/message.service';
 export class ProcessDetailsComponent implements OnInit, OnDestroy {
   @Input() process: IProcess;
   processDetailsObs$: Observable<IProcessDetails>;
-  claimDetailsFormGrp: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _httpClient: HttpClient, private _messageSrv: MessageService) {
+  claimDetailsFormGrp: FormGroup;
+  subscriptions: Subscription[] = [];
+
+  constructor(
+    private _fb: FormBuilder, private _httpClient: HttpClient,
+    private _messageSrv: MessageService,
+    private _snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
     this.createForm();
     this.populateDetails();
 
-    this._messageSrv.getRefreshMsgObs().subscribe((msg: boolean) => {
-      if (msg) {
-        this.claimDetailsFormGrp.reset();
-        this.claimCauseControl.disable();
-      }
-    })
+    this.subscriptions.push(
+      this._messageSrv.getRefreshProcessMsg$().subscribe((msg: boolean) => {
+        if (msg) {
+          this.claimDetailsFormGrp.reset();
+          this.injuryTypeControl.disable();
+        }
+      })
+    );
   }
 
   createForm() {
     this.claimDetailsFormGrp = this._fb.group({
-      superClaimControl: [null],
-      claimDateControl: [null],
-      claimCauseControl: [{value: null, disabled: true}],
+      superClaimControl: [null, Validators.required],
+      claimDateControl: [null, Validators.required],
+      claimCauseControl: [null, Validators.required],
+      injuryTypeControl: [{value: null, disabled: true}, Validators.required],
+      submittedByControl: [null, Validators.required],
+      submissionMethodControl: [null, Validators.required],
     });
   }
 
@@ -44,15 +55,27 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
     this.processDetailsObs$ = this._httpClient.get<IProcessDetails>('assets/mocks/process-details.json');
   }
 
-  get claimCauseControl(): FormControl {
-    return this.claimDetailsFormGrp.controls.claimCauseControl as FormControl;
+  // get claimCauseControl(): FormControl {
+  //   return this.claimDetailsFormGrp.controls.claimCauseControl as FormControl;
+  // }
+  //
+  get injuryTypeControl(): FormControl {
+    return this.claimDetailsFormGrp.controls.injuryTypeControl as FormControl;
   }
 
-  onSuperClaimChange() {
-    this.claimCauseControl.enable();
+  onClaimCauseChange() {
+    this.injuryTypeControl.enable();
+  }
+
+  onSubmittedByChange(event: any) {
+      const code = event.target.value;
+      this._messageSrv.checkSubmittedBy(code);
   }
 
   ngOnDestroy() {
+    for (const sbs of this.subscriptions) {
+      sbs.unsubscribe();
+    }
   }
 
 }

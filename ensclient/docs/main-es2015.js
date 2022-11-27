@@ -1100,7 +1100,7 @@ class MessageService {
         this.refreshMsgSubject.next(refresh);
     }
     getRefreshMsgObs() {
-        return this.refreshMsgObs$;
+        return this.refreshProcessMsg$;
     }
 }
 MessageService.ɵfac = function MessageService_Factory(t) { return new (t || MessageService)(); };
