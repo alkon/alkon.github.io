@@ -20,7 +20,7 @@
   "contactPersons": [
     {
       "id": 1,
-      "deliveryFlag": false,
+      "deliveryFlag": true,
       "type": {
         "code": 1,
         "value": "מבוטח"

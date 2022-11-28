@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {IProcess} from '@app/model/data/process.model';
 import {MessageService} from '@app/services/message.service';
+import {ConfirmDialogService} from '@app/shared/confirm-dialog/confirm-dialog.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,9 @@ export class HomeComponent implements OnInit {
 
   processObs$: Observable<IProcess>;
 
-  constructor(private _httpClient: HttpClient, private _messageSrv: MessageService) {
+  constructor(private _httpClient: HttpClient,
+              private _messageSrv: MessageService,
+              private _dialogSrv: ConfirmDialogService) {
   }
 
   ngOnInit(): void {

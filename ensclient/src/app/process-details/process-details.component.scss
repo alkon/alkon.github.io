@@ -6,9 +6,19 @@
   }
 
   ::ng-deep .mat-datepicker-toggle .mat-icon-button {
-    border: 1px yellow solid;
-    width: 20px;
-    height: 20px;
+    float: right;
+  }
+
+  ::ng-deep .mat-form-field-wrapper {
+    width: 15em;
+  }
+
+  ::ng-deep .mat-select-value-text {
+    float: right;
+  }
+
+  ::ng-deep .mat-select-panel{
+    //max-height: 100px!important;
   }
 
   .row {
@@ -17,13 +27,23 @@
 
   .row-edit {
     @extend .row;
-    height: 5em;
+    //height: 5em;
   }
 
   .details {
     display: flex;
     flex-direction: column;
     padding: 1.7em;
+  }
+
+  .details-edit {
+    @extend .details;
+  }
+
+  .label-edit {
+    padding-top: 1.7em;
+    padding-right: 3.5em;
+    padding-left: 0;
   }
 
   .column {

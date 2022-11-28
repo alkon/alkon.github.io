@@ -6,7 +6,6 @@ import {Observable, Subscription} from 'rxjs';
 import {IProcess} from '@app/model/data/process.model';
 import {IProcessDetails} from '@app/model/domain/process-details.model';
 import {MessageService} from '@app/services/message.service';
-import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-process-details',
@@ -22,8 +21,7 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private _fb: FormBuilder, private _httpClient: HttpClient,
-    private _messageSrv: MessageService,
-    private _snackBar: MatSnackBar) {
+    private _messageSrv: MessageService) {
   }
 
   ngOnInit(): void {
@@ -68,7 +66,7 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmittedByChange(event: any) {
-      const code = event.target.value;
+      const code = event.value;
       this._messageSrv.checkSubmittedBy(code);
   }
 

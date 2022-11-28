@@ -1,0 +1,12 @@
+<div class="confirm-dialog">
+  <div class="header">
+    <div class="dialog-title" mat-dialog-title>{{data.title}}</div>
+  </div>
+  <div mat-dialog-content>
+    <p class="dialog-message">{{data.message}}</p>
+  </div>
+  <div class="btn-container" mat-dialog-actions>
+    <button *ngIf="data.cancelText" class="btn btn-cancel" (click)="cancel()">{{data.cancelText}}</button>
+    <button *ngIf="data.confirmText" class="btn" (click)="confirm()">{{data.confirmText}}</button>
+  </div>
+</div>

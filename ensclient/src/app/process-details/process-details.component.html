@@ -22,75 +22,80 @@
     <form [formGroup]="claimDetailsFormGrp" class="grey-bg">
 
       <div class="row-edit">
-        <mat-form-field class="details-edit">
+        <mat-label class="label-edit">סוג תביעת על: </mat-label>
+        <mat-form-field class="details-edit" dir="rtl">
           <div class="column">
-            <label>סוג תביעת על: </label>
-            <select name="superClaimDdList" formControlName="superClaimControl">
-              <option *ngFor="let superClaim of processDetails.superClaimDdList"
+            <mat-select name="superClaimDdList" formControlName="superClaimControl" dir="rtl">
+              <mat-option *ngFor="let superClaim of processDetails.superClaimDdList"
                       [value]="superClaim.val">{{superClaim.desc}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
         </mat-form-field>
 
+        <mat-label class="label-edit">תאריך אירוע: </mat-label>
         <mat-form-field class="details-edit">
-          <div class="column claim-datepicker">
-            <label>תאריך אירוע: </label>
+          <div class="column claim-datepicker" dir="rtl">
             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <input name="claimDate" [matDatepicker]="picker" formControlName="claimDateControl" placeholder="הזן תאריך">
+            <input matInput name="claimDate" [matDatepicker]="picker" formControlName="claimDateControl" placeholder="הזן תאריך">
             <mat-datepicker #picker></mat-datepicker>
           </div>
         </mat-form-field>
       </div>
 
       <div class="row-edit">
-        <mat-form-field class="details-edit">
+
+        <mat-label class="label-edit">סיבת אירוע: </mat-label>
+        <mat-form-field class="details-edit" dir="rtl">
           <div class="column">
-            <label>סיבת אירוע: </label>
-            <select name="claimCauseDdList" formControlName="claimCauseControl" (change)="onClaimCauseChange()">
-              <option *ngFor="let claimCause of processDetails.claimCauseDdList"
+            <mat-select name="claimCauseDdList" formControlName="claimCauseControl" dir="rtl"
+                        (selectionChange)="onClaimCauseChange()">
+              <mat-option *ngFor="let claimCause of processDetails.claimCauseDdList"
                       [value]="claimCause.val">{{claimCause.desc}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
         </mat-form-field>
 
-        <mat-form-field class="details-edit">
+        <mat-label class="label-edit">מהות אירוע: </mat-label>
+        <mat-form-field class="details-edit" dir="rtl">
           <div class="column">
-            <label>מהות אירוע: </label>
-            <select name="injuryTypeDdList" formControlName="injuryTypeControl">
-              <option *ngFor="let injuryType of processDetails.injuryTypeDdList"
+            <mat-select name="injuryTypeDdList" formControlName="injuryTypeControl" dir="rtl">
+              <mat-option *ngFor="let injuryType of processDetails.injuryTypeDdList"
                       [value]="injuryType.val">{{injuryType.desc}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
         </mat-form-field>
       </div>
 
       <div class="row-edit">
-        <mat-form-field class="details-edit">
+        <mat-label class="label-edit">תביעה הוגשה באמצעות: </mat-label>
+        <mat-form-field class="details-edit" dir="rtl">
           <div class="column">
-            <label>תביעה הוגשה באמצעות: </label>
-            <select name="submittedByDdList" formControlName="submittedByControl" (change)="onSubmittedByChange($event)">
-              <option *ngFor="let submittedBy of processDetails.submittedByDdList"
+            <mat-select name="submittedByDdList" formControlName="submittedByControl"
+                        dir="rtl" (selectionChange)="onSubmittedByChange($event)">
+              <mat-option *ngFor="let submittedBy of processDetails.submittedByDdList"
                       [value]="submittedBy.val">{{submittedBy.desc}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
         </mat-form-field>
 
-        <mat-form-field class="details-edit">
+        <mat-label class="label-edit">אופן קבלת התביעה: </mat-label>
+        <mat-form-field class="details-edit" dir="rtl">
           <div class="column">
-            <label>אופן קבלת התביעה: </label>
-            <select name="submissionMethodDdList" formControlName="submissionMethodControl">
-              <option *ngFor="let submissionMethod of processDetails.submissionMethodDdList"
+            <mat-select name="submissionMethodDdList" formControlName="submissionMethodControl" dir="rtl">
+              <mat-option *ngFor="let submissionMethod of processDetails.submissionMethodDdList"
                       [value]="submissionMethod.val">{{submissionMethod.desc}}
-              </option>
-            </select>
+              </mat-option>
+            </mat-select>
           </div>
         </mat-form-field>
       </div>
 
     </form>
   </div>
+
+
 </div>

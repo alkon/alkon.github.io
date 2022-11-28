@@ -6,11 +6,13 @@ import {HomeComponent} from '@app/home/home.component';
 import {CommonModule} from '@angular/common';
 import {HttpClientModule} from '@angular/common/http';
 import {HomeModule} from '@app/home/home.module';
+//import {ConfirmDialogComponent} from '@app/shared/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    //ConfirmDialogComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -20,6 +22,7 @@ import {HomeModule} from '@app/home/home.module';
     HomeModule
   ],
   providers: [],
+  //entryComponents: [ConfirmDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
