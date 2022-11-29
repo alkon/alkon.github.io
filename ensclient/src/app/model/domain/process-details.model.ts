@@ -2,27 +2,27 @@ export interface IProcessDetails {
   eventDate: number;
 
   superClaimDdList: [{
-    val: number;
-    desc: string;
+    code: number;
+    value: string;
   }];
 
   claimCauseDdList: [{
-    val: number;
-    desc: string;
+    code: number;
+    value: string;
   }];
 
   injuryTypeDdList: [{
-    val: number;
-    desc: string;
+    code: number;
+    value: string;
   }];
 
   submittedByDdList: [{
-    val: number;
-    desc: string;
+    code: number;
+    value: string;
   }];
 
   submissionMethodDdList: [{
-    val: number;
-    desc: string;
+    code: number;
+    value: string;
   }];
 }

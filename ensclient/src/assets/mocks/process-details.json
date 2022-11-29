@@ -1,42 +1,42 @@
 {
   "superClaimDdList": [
-    {"val": 1, "desc": "התביעה אושרה"},
-    {"val": 2, "desc": "התביעה נדחתה"},
-    {"val": 4, "desc": "טרם התקבלה החלטה"}
+    {"code": 1, "value": "התביעה אושרה"},
+    {"code": 2, "value": "התביעה נדחתה"},
+    {"code": 4, "value": "טרם התקבלה החלטה"}
   ],
 
   "claimCauseDdList": [
-    {"val": 1, "desc": "תאונה"},
-    {"val": 2, "desc": "מחלה"},
-    {"val": 5, "desc": "תאונת עבודה"},
-    {"val": 6, "desc": "אחר"}
+    {"code": 1, "value": "תאונה"},
+    {"code": 2, "value": "מחלה"},
+    {"code": 5, "value": "תאונת עבודה"},
+    {"code": 6, "value": "אחר"}
   ],
 
   "injuryTypeDdList": [
-    {"val": 1, "desc": "אגן"},
-    {"val": 2, "desc": "גפיים"},
-    {"val": 5, "desc": "ראש"},
-    {"val": 6, "desc": "גב"},
-    {"val": 7, "desc": "לב"},
-    {"val": 7, "desc": "נפש"}
+    {"code": 1, "value": "אגן"},
+    {"code": 2, "value": "גפיים"},
+    {"code": 5, "value": "ראש"},
+    {"code": 6, "value": "גב"},
+    {"code": 7, "value": "לב"},
+    {"code": 7, "value": "נפש"}
   ],
 
   "submittedByDdList": [
-    {"val": 1, "desc": "מבוטח"},
-    {"val": 2, "desc": "סוכן"},
-    {"val": 3, "desc": "בן/בת זוג"}
+    {"code": 1, "value": "מבוטח"},
+    {"code": 2, "value": "סוכן"},
+    {"code": 3, "value": "בן/בת זוג"}
   ],
 
   "submissionMethodDdList": [
-    {"val": 1, "desc": "דואר"},
-    {"val": 2, "desc": "דיגיטל"},
-    {"val": 3, "desc": "פקס"}
+    {"code": 1, "value": "דואר"},
+    {"code": 2, "value": "דיגיטל"},
+    {"code": 3, "value": "פקס"}
   ],
 
   "identityTypesDdList": [
-    {"val": 1, "desc": "ת.ז"},
-    {"val": 2, "desc": "דרכון"},
-    {"val": 3, "desc": "מבוטח"},
-    {"val": 4, "desc": "מפעל"}
+    {"code": 1, "value": "ת.ז"},
+    {"code": 2, "value": "דרכון"},
+    {"code": 3, "value": "מבוטח"},
+    {"code": 4, "value": "מפעל"}
   ]
 }

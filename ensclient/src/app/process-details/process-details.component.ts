@@ -6,6 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {IProcess} from '@app/model/data/process.model';
 import {IProcessDetails} from '@app/model/domain/process-details.model';
 import {MessageService} from '@app/services/message.service';
+import {DdListsContentService} from '@app/services/dd-lists-content.service';
 
 @Component({
   selector: 'app-process-details',
@@ -16,12 +17,15 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
   @Input() process: IProcess;
   processDetailsObs$: Observable<IProcessDetails>;
 
+  processDetails: IProcessDetails;
+
   claimDetailsFormGrp: FormGroup;
   subscriptions: Subscription[] = [];
 
   constructor(
     private _fb: FormBuilder, private _httpClient: HttpClient,
-    private _messageSrv: MessageService) {
+    private _messageSrv: MessageService,
+    private _ddListsContentSrv: DdListsContentService) {
   }
 
   ngOnInit(): void {
@@ -43,20 +47,21 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
       superClaimControl: [null, Validators.required],
       claimDateControl: [null, Validators.required],
       claimCauseControl: [null, Validators.required],
-      injuryTypeControl: [{value: null, disabled: true}, Validators.required],
+      injuryTypeControl: [{value: null, disabled: true}/*, Validators.required*/],
       submittedByControl: [null, Validators.required],
-      submissionMethodControl: [null, Validators.required],
+      submissionMethodControl: [null/*, Validators.required*/],
     });
   }
 
   populateDetails() {
-    this.processDetailsObs$ = this._httpClient.get<IProcessDetails>('assets/mocks/process-details.json');
+    this._httpClient.get<IProcessDetails>('assets/mocks/process-details.json').subscribe(
+      (details: IProcessDetails) => {
+               this.processDetails = details;
+               this._ddListsContentSrv.submittedByDdList = details.submittedByDdList;
+         }
+    );
   }
 
-  // get claimCauseControl(): FormControl {
-  //   return this.claimDetailsFormGrp.controls.claimCauseControl as FormControl;
-  // }
-  //
   get injuryTypeControl(): FormControl {
     return this.claimDetailsFormGrp.controls.injuryTypeControl as FormControl;
   }

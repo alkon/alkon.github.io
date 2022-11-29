@@ -8,8 +8,8 @@
       <span class="action-label"> פעולות אפשריות: </span>
 
       <span class="button action-btn" (click)="showContactPersonNewRow()">הוספת מבוטח</span>
-      <span class="button action-btn">איפוס מלא</span>
-      <span class="button action-btn">איפוס אנשי קשר</span>
+      <span class="button action-btn"(click)="removeAll()">איפוס מלא</span>
+      <span class="button action-btn"(click)="removeAllNonDelivery()">איפוס אנשי קשר</span>
     </div>
   </section>
 </div>

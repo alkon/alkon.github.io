@@ -13,10 +13,11 @@ export class ContactPersonsComponent implements OnInit, OnDestroy {
   @Input() persons: IContactPerson[];
   subscriptions: Subscription[] = [];
 
+  contactPersonsAmount: number;
+
   constructor(private _messageSrv: MessageService, private _dialogSrv: ConfirmDialogService) { }
 
   ngOnInit(): void {
-
     this.subscriptions.push(
       this._messageSrv.getCheckSubmittedByMsg$().subscribe((code: number) => {
         const existedCodeArr =
@@ -32,11 +33,29 @@ export class ContactPersonsComponent implements OnInit, OnDestroy {
 
           this._dialogSrv.open(options);
         }
-    }));
+    }),
+
+      this._messageSrv.getContactPersonsChangedAmountMsg$().subscribe((persons: IContactPerson[]) => {
+        if (persons) {
+          this.persons = persons;
+        }
+      }));
   }
 
   showContactPersonNewRow() {
     this._messageSrv.showContactPersonNewRow(true);
+  }
+
+  cleanAll() {
+
+  }
+
+  removeAll() {
+     this._messageSrv.removeAllContactPersons(true);
+  }
+
+  removeAllNonDelivery() {
+    this._messageSrv.removeAllContactPersonsNonDelivery(true);
   }
 
   ngOnDestroy() {

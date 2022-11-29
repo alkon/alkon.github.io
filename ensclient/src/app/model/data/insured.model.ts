@@ -3,9 +3,9 @@ export interface IInsured {
     cityName: string;
     streetName: string;
   };
-  identityType: number;
   age: number;
-  lastName: string;
   identity: number;
+  identityType: number;
   firstName: string;
+  lastName: string;
 }
