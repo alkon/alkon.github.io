@@ -6,7 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {IProcess} from '@app/model/data/process.model';
 import {IProcessDetails} from '@app/model/domain/process-details.model';
 import {MessageService} from '@app/services/message.service';
-import {DdListsContentService} from '@app/services/dd-lists-content.service';
+import {DdListsContentService, IListItem} from '@app/services/dd-lists-content.service';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {FormRegisterService} from '@app/services/form-register.service';
 
@@ -23,6 +23,8 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
 
   claimDetailsFormGrp: FormGroup;
   subscriptions: Subscription[] = [];
+
+  identityTypeValue: string = '';
 
   FORM_NAME = 'claimDetailsFormGrp';
 
@@ -77,7 +79,16 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
     this._httpClient.get<IProcessDetails>('assets/mocks/process-details.json').subscribe(
       (details: IProcessDetails) => {
                this.processDetails = details;
+
+               // *** Store data for appropriate drop-down lists
                this._ddListsContentSrv.submittedByDdList = details.submittedByDdList;
+               //this._ddListsContentSrv.identityTypeDdList = details.identityTypeDdList;
+
+               const typeCode = this.process.insured.identityType;
+               const item: IListItem = details.identityTypesDdList.find(type => type.code === typeCode);
+               if (item) {
+                 this.identityTypeValue = item.value;
+               }
          }
     );
   }

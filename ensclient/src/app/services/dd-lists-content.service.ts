@@ -12,4 +12,5 @@ export class DdListsContentService {
   constructor() { }
 
   submittedByDdList: IListItem[];
+  //identityTypeDdList: IListItem[];
 }

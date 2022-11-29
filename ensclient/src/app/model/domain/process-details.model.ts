@@ -25,4 +25,9 @@ export interface IProcessDetails {
     code: number;
     value: string;
   }];
+
+  identityTypesDdList: [{
+    code: number;
+    value: string;
+  }];
 }
