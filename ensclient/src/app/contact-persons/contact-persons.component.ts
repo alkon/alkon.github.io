@@ -2,9 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {IContactPerson} from '@app/model/data/contact-person.model';
 import {MessageService} from '@app/services/message.service';
 import {Subscription} from 'rxjs';
-import {MatDialog} from '@angular/material/dialog';
 import {ConfirmDialogService} from '@app/shared/confirm-dialog/confirm-dialog.service';
-
 
 @Component({
   selector: 'app-contact-persons',
@@ -37,8 +35,8 @@ export class ContactPersonsComponent implements OnInit, OnDestroy {
     }));
   }
 
-  addContactPerson() {
-    //this._messageSrv.addContactPerson()
+  showContactPersonNewRow() {
+    this._messageSrv.showContactPersonNewRow(true);
   }
 
   ngOnDestroy() {

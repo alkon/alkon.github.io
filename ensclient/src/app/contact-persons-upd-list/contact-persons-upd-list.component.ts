@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
+import {MessageService} from "@app/services/message.service";
 
 @Component({
   selector: 'app-contact-persons-upd-list',
@@ -32,12 +33,17 @@ export class ContactPersonsUpdListComponent implements OnInit {
   tableFormGrp: FormGroup;
 
   //@ViewChild(MatTable) cpTable!: MatTable<any>;
-  displayedColumns: string[] = ['deliveryFlag', 'name', 'type', 'address', 'phoneNumber', 'email', 'addButton'];
+  displayedColumns: string[] =
+    ['deliveryFlag', 'name', 'type', 'address', 'phoneNumber', 'email',
+      'addButton', 'removeButton'];
 
   dataSource = new MatTableDataSource<any>();
 
+  chosenTypeCode = 1;
+
   constructor(private _tableFb: FormBuilder,
-              private _rowFb: FormBuilder) {}
+              private _rowFb: FormBuilder,
+              private _messageSrv: MessageService) {}
 
   ngOnInit() {
     this.tableFormGrp = this._tableFb.group({
@@ -49,7 +55,7 @@ export class ContactPersonsUpdListComponent implements OnInit {
         (personToAdd: any) => this._rowFb.group({
           deliveryFlag: new FormControl(personToAdd.deliveryFlag),
           name: new FormControl(personToAdd.name, Validators.required),
-          typeArr: new FormControl(personToAdd.typeArr, Validators.required),
+          type: new FormControl(personToAdd.typeArr/*, Validators.required*/),
           //type: new FormControl(personToAdd.type.value, Validators.required),
           phoneNumber: new FormControl(personToAdd.phoneNumber, Validators.required),
           address: new FormControl(personToAdd.address, Validators.required),
@@ -89,6 +95,10 @@ export class ContactPersonsUpdListComponent implements OnInit {
     //this.rowsArr.push(this.initEmptyRowForm());
     //this.rowsArr.insert(0, this.initEmptyRowForm());
     console.log('contactPerson: ', this.tableFormGrp.value);
+  }
+
+  removeContactPersonNewRow() {
+    this._messageSrv.showContactPersonNewRow(false);
   }
 
   // initEmptyRowForm(): FormGroup {

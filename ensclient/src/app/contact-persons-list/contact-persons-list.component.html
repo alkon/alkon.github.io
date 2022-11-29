@@ -28,7 +28,7 @@
 
           <ng-container matColumnDef="phoneNumber">
             <mat-header-cell *matHeaderCellDef> טלפון נייד </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.phoneNumber}} </mat-cell>
+            <mat-cell *matCellDef="let element"> {{element.phoneNumber | phone}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="email">
@@ -39,8 +39,12 @@
           <tr mat-header-row class="grey-bg" *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <app-contact-persons-upd-list></app-contact-persons-upd-list>
-        <button (click)="addContactPerson()" class="btn btn-primary mr-5">הוסף איש קשר</button>
+
+        <div *ngIf="showNewRow">
+           <app-contact-persons-upd-list></app-contact-persons-upd-list>
+        </div>
+
+        <button (click)="showContactPersonNewRow(true)" class="btn btn-primary mr-5">הוסף איש קשר</button>
 
       </ng-container>
   </div>

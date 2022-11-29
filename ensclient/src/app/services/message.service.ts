@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {IContactPerson} from '@app/model/data/contact-person.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +9,8 @@ export class MessageService {
   private refreshProcessSubject = new BehaviorSubject<boolean>(false);
   refreshProcessMsg$: Observable<boolean> = this.refreshProcessSubject.asObservable();
 
-  private addContactPersonSubject = new BehaviorSubject<IContactPerson>(null);
-  addContactPersonMsg$: Observable<IContactPerson> = this.addContactPersonSubject.asObservable();
+  private showContactPersonNewRowSubject = new BehaviorSubject<boolean>(false);
+  showContactPersonNewRowMsg$: Observable<boolean> = this.showContactPersonNewRowSubject.asObservable();
 
   private checkSubmittedBySubject = new BehaviorSubject<number>(null);
   checkSubmittedByMsg$: Observable<number> = this.checkSubmittedBySubject.asObservable();
@@ -27,13 +26,13 @@ export class MessageService {
     return this.refreshProcessMsg$;
   }
 
-  // *** Add Contact Person
-  addContactPerson(contactPerson: IContactPerson): void {
-    this.addContactPersonSubject.next(contactPerson);
+  // *** Show Contact Person New Row
+  showContactPersonNewRow(show: boolean = false): void {
+    this.showContactPersonNewRowSubject.next(show);
   }
 
-  getAddContactPersonMsg$(): Observable<IContactPerson> {
-    return this.addContactPersonMsg$;
+  getShowContactPersonNewRowMsg$(): Observable<boolean> {
+    return this.showContactPersonNewRowMsg$;
   }
 
   // *** Check Submitted By
