@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {IContactPerson} from '@app/model/data/contact-person.model';
+import {FormGroup} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,12 @@ export class MessageService {
 
   private contactPersonsChangedAmountSubject = new BehaviorSubject<IContactPerson[]>(null);
   contactPersonsChangedAmountMsg$: Observable<IContactPerson[]> = this.contactPersonsChangedAmountSubject.asObservable();
+
+  private formStatusChangedSubject = new BehaviorSubject<[FormGroup, string]>([null, '']);
+  formStatusChangedMsg$: Observable<[FormGroup, string]> = this.formStatusChangedSubject.asObservable();
+
+  private printFormsSubject = new BehaviorSubject<boolean>(false);
+  printFormsMsg$: Observable<boolean> = this.printFormsSubject.asObservable();
 
   constructor() { }
 
@@ -93,5 +100,21 @@ export class MessageService {
     return this.contactPersonsChangedAmountMsg$;
   }
 
+  // *** Form Valid Status
+  changeFormStatus(formData: [FormGroup, string] = null) {
+    this.formStatusChangedSubject.next(formData);
+  }
 
+  getFormStatusChangedMsg$(): Observable<[FormGroup, string]> {
+    return this.formStatusChangedMsg$;
+  }
+
+  // *** Print Forms
+  printForms(print: boolean = false) {
+    this.printFormsSubject.next(print);
+  }
+
+  getPrintFormsMsg$(): Observable<boolean> {
+    return this.printFormsMsg$;
+  }
 }

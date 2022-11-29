@@ -19,4 +19,7 @@
   <app-contact-persons [persons]="process.contactPersons"></app-contact-persons>
   <app-contact-persons-list [persons]="process.contactPersons"></app-contact-persons-list>
 
+  <button (click)="continueProcess()"  [disabled]="existNonValidForm"
+          [ngClass]="existNonValidForm ? 'disabled-button' : 'button'">המשך</button>
+
 </div>

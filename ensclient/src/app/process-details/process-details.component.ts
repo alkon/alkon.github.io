@@ -7,6 +7,8 @@ import {IProcess} from '@app/model/data/process.model';
 import {IProcessDetails} from '@app/model/domain/process-details.model';
 import {MessageService} from '@app/services/message.service';
 import {DdListsContentService} from '@app/services/dd-lists-content.service';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {FormRegisterService} from '@app/services/form-register.service';
 
 @Component({
   selector: 'app-process-details',
@@ -22,10 +24,13 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
   claimDetailsFormGrp: FormGroup;
   subscriptions: Subscription[] = [];
 
+  FORM_NAME = 'claimDetailsFormGrp';
+
   constructor(
     private _fb: FormBuilder, private _httpClient: HttpClient,
     private _messageSrv: MessageService,
-    private _ddListsContentSrv: DdListsContentService) {
+    private _ddListsContentSrv: DdListsContentService,
+    private _formRegisterSrv: FormRegisterService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +43,19 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
           this.claimDetailsFormGrp.reset();
           this.injuryTypeControl.disable();
         }
-      })
+      }),
+
+      this.claimDetailsFormGrp.statusChanges.pipe(
+        distinctUntilChanged()).subscribe((status) => {
+          this._messageSrv.changeFormStatus([this.claimDetailsFormGrp, 'claimDetailsFormGrp']);
+          //console.log(`the new status is ${status}`);
+      }),
+
+      this._messageSrv.getPrintFormsMsg$().subscribe((print: boolean) => {
+         if (print) {
+             console.log('Data of ' + this.FORM_NAME, this.claimDetailsFormGrp.value);
+         }
+      }),
     );
   }
 
@@ -51,6 +68,9 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
       submittedByControl: [null, Validators.required],
       submissionMethodControl: [null/*, Validators.required*/],
     });
+
+    // *** Register Form
+    this._formRegisterSrv.registerForm(this.FORM_NAME);
   }
 
   populateDetails() {

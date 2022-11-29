@@ -1,15 +1,18 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {MessageService} from '@app/services/message.service';
 import {DdListsContentService, IListItem} from '@app/services/dd-lists-content.service';
+import {FormRegisterService} from '@app/services/form-register.service';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-contact-persons-upd-list',
   templateUrl: './contact-persons-upd-list.component.html',
   styleUrls: ['./contact-persons-upd-list.component.scss']
 })
-export class ContactPersonsUpdListComponent implements OnInit {
+export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
   personToAdd: any = [{
     deliveryFlag: false,
     typeArr: [],
@@ -28,17 +31,33 @@ export class ContactPersonsUpdListComponent implements OnInit {
 
   dataSource = new MatTableDataSource<any>();
 
-  HEBREW_PATTERN = '/^[a-z\u0590-\u05fe]+$/i';
+  FORM_NAME = 'tableFrmGrp';
+  HEBREW_PATTERN = '^[\u0590-\u05FF]+$';
+
+  subscriptions: Subscription[] = [];
 
   constructor(private _tableFb: FormBuilder,
               private _rowFb: FormBuilder,
               private _messageSrv: MessageService,
-              private _ddListsContentSrv: DdListsContentService) {}
+              private _ddListsContentSrv: DdListsContentService,
+              private _formRegisterSrv: FormRegisterService) {}
 
   ngOnInit() {
     this.submittedDdList = this._ddListsContentSrv.submittedByDdList;
     this.personToAdd[0].typeArr = this.submittedDdList;
 
+    this.createForm();
+
+    this.dataSource =
+      new MatTableDataSource(this.rowsArr.controls);
+
+    this.tableFormGrp.statusChanges.pipe(
+      distinctUntilChanged()).subscribe(() => {
+      this._messageSrv.changeFormStatus([this.tableFormGrp, 'tableFormGrp']);
+    });
+  }
+
+  createForm() {
     this.tableFormGrp = this._tableFb.group({
       rowsFormControl: this._tableFb.array([])
     });
@@ -60,8 +79,8 @@ export class ContactPersonsUpdListComponent implements OnInit {
       ))
     });
 
-    this.dataSource =
-      new MatTableDataSource(this.rowsArr.controls);
+    // *** Register Form
+    this._formRegisterSrv.registerForm(this.FORM_NAME);
   }
 
   get rowsArr(): FormArray {
@@ -75,7 +94,7 @@ export class ContactPersonsUpdListComponent implements OnInit {
 
   onTypeChange(event: any) {
       const typeCode = event.value;
-      const cpToAdd = this.getContactPersonToAdd();
+      let cpToAdd = this.getContactPersonToAdd();
       const typeObj = cpToAdd.type.find( t => t.code === typeCode);
       cpToAdd.type = typeObj;
       //console.log('Updated cp: ' + this.getContactPersonToAdd())
@@ -103,5 +122,11 @@ export class ContactPersonsUpdListComponent implements OnInit {
 
   removeContactPersonNewRow() {
     this._messageSrv.showContactPersonNewRow(false);
+  }
+
+  ngOnDestroy() {
+    for (const sbs of this.subscriptions) {
+      sbs.unsubscribe();
+    }
   }
 }

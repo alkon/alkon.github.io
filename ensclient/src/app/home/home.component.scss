@@ -14,3 +14,13 @@
   margin-top: -20px;
   width: 5%;
 }
+
+.disabled-button {
+  @extend .button;
+  opacity: 0.3;
+  cursor: none;
+}
+
+.left {
+  float: left;
+}
