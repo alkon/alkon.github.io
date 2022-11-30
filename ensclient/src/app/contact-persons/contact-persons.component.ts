@@ -3,6 +3,7 @@ import {IContactPerson} from '@app/model/data/contact-person.model';
 import {MessageService} from '@app/services/message.service';
 import {Subscription} from 'rxjs';
 import {ConfirmDialogService} from '@app/shared/confirm-dialog/confirm-dialog.service';
+import {Utils} from '@app/util/utils';
 
 @Component({
   selector: 'app-contact-persons',
@@ -59,9 +60,7 @@ export class ContactPersonsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (const sbs of this.subscriptions) {
-      sbs.unsubscribe();
-    }
+    Utils.unsubscribeAll(this.subscriptions);
   }
 
 }

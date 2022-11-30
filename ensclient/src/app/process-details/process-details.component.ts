@@ -9,6 +9,7 @@ import {MessageService} from '@app/services/message.service';
 import {DdListsContentService, IListItem} from '@app/services/dd-lists-content.service';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {FormRegisterService} from '@app/services/form-register.service';
+import {Utils} from '@app/util/utils';
 
 @Component({
   selector: 'app-process-details',
@@ -49,13 +50,13 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
 
       this.claimDetailsFormGrp.statusChanges.pipe(
         distinctUntilChanged()).subscribe((status) => {
-          this._messageSrv.changeFormStatus([this.claimDetailsFormGrp, 'claimDetailsFormGrp']);
+          this._messageSrv.changeFormStatus([this.getFormGrp(), this.FORM_NAME]);
           //console.log(`the new status is ${status}`);
       }),
 
       this._messageSrv.getPrintFormsMsg$().subscribe((print: boolean) => {
          if (print) {
-             console.log('Data of ' + this.FORM_NAME, this.claimDetailsFormGrp.value);
+             console.log('Data of ' + this.FORM_NAME, this.getFormGrp().value);
          }
       }),
     );
@@ -106,10 +107,12 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
       this._messageSrv.checkSubmittedBy(code);
   }
 
+  private getFormGrp(): FormGroup {
+    return this.claimDetailsFormGrp;
+  }
+
   ngOnDestroy() {
-    for (const sbs of this.subscriptions) {
-      sbs.unsubscribe();
-    }
+    Utils.unsubscribeAll(this.subscriptions);
   }
 
 }

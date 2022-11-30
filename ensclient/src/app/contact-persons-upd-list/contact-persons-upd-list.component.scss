@@ -6,6 +6,26 @@
     text-align: right;
   }
 
+  .name-column {
+    ::ng-deep .mat-form-field-infix {
+      margin-right: -0.7em;
+      margin-left: 2.4em;
+    }
+  }
+
+  .address-column {
+    ::ng-deep .mat-form-field-infix {
+      margin-right: 2em;
+      margin-left: 1.5em;
+    }
+  }
+
+  .phone-number-column {
+    ::ng-deep .mat-form-field-infix {
+      margin-left: 1.7em;
+    }
+  }
+
   tr.mat-row {
     background-color: white;
   }

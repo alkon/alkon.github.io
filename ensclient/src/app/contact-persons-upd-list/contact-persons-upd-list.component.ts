@@ -6,6 +6,8 @@ import {DdListsContentService, IListItem} from '@app/services/dd-lists-content.s
 import {FormRegisterService} from '@app/services/form-register.service';
 import {distinctUntilChanged} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
+import {IContactPerson} from '@app/model/data/contact-person.model';
+import {Utils} from '@app/util/utils';
 
 @Component({
   selector: 'app-contact-persons-upd-list',
@@ -13,7 +15,7 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./contact-persons-upd-list.component.scss']
 })
 export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
-  personToAdd: any = [{
+  personToEditArr: any = [{
     deliveryFlag: false,
     typeArr: [],
     name: '',
@@ -21,6 +23,8 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
     email: '',
     address: ''
   }];
+
+  personToAdd: IContactPerson;
 
   tableFormGrp: FormGroup;
   submittedDdList: IListItem[];
@@ -31,8 +35,8 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
 
   dataSource = new MatTableDataSource<any>();
 
-  FORM_NAME = 'tableFrmGrp';
-  HEBREW_PATTERN = '^[\u0590-\u05FF]+$';
+  FORM_NAME = 'tableFormGrp';
+  HEBREW_PATTERN = '^[\u0590-\u05FF ]+$';
 
   subscriptions: Subscription[] = [];
 
@@ -44,7 +48,7 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.submittedDdList = this._ddListsContentSrv.submittedByDdList;
-    this.personToAdd[0].typeArr = this.submittedDdList;
+    this.personToEditArr[0].typeArr = this.submittedDdList;
 
     this.createForm();
 
@@ -53,8 +57,16 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
 
     this.tableFormGrp.statusChanges.pipe(
       distinctUntilChanged()).subscribe(() => {
-      this._messageSrv.changeFormStatus([this.tableFormGrp, 'tableFormGrp']);
+      this._messageSrv.changeFormStatus([this.getFormGrp(), this.FORM_NAME]);
     });
+
+    this.subscriptions.push(
+      this._messageSrv.getPrintFormsMsg$().subscribe((print: boolean) => {
+        if (print) {
+          console.log('Data of ' + this.FORM_NAME, this.getFormGrp().value);
+        }
+      }),
+    )
   }
 
   createForm() {
@@ -63,17 +75,18 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
     });
 
     this.tableFormGrp = this._rowFb.group({
-      rowsArr: this._rowFb.array(this.personToAdd.map(
-        (personToAdd: any) => this._rowFb.group({
-          deliveryFlag: new FormControl(personToAdd.deliveryFlag),
-          name: new FormControl(personToAdd.name,
+      rowsArr: this._rowFb.array(this.personToEditArr.map(
+        (personToEdit: any) => this._rowFb.group({
+          deliveryFlag: new FormControl(personToEdit.deliveryFlag),
+          name: new FormControl(personToEdit.name,
             [Validators.required, Validators.pattern(this.HEBREW_PATTERN)]),
-          type: new FormControl(personToAdd.typeArr, /*Validators.required*/),
-          phoneNumber: new FormControl(personToAdd.phoneNumber,
-            [Validators.required, Validators.minLength(10),
-              Validators.maxLength(10)]),
-          address: new FormControl(personToAdd.address),
-          email: new FormControl(personToAdd.email, [Validators.email]),
+          type: new FormControl(personToEdit.typeArr, Validators.required),
+          phoneNumber: new FormControl(personToEdit.phoneNumber,
+            [Validators.required,
+              Validators.minLength(9), // no leading-zero case
+              Validators.maxLength(10)]), // leading-zero case
+          address: new FormControl(personToEdit.address),
+          email: new FormControl(personToEdit.email, [Validators.email]),
           //addButton: new FormControl(null),
         })
       ))
@@ -92,41 +105,30 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
     return array;
   }
 
-  onTypeChange(event: any) {
-      const typeCode = event.value;
-      let cpToAdd = this.getContactPersonToAdd();
-      const typeObj = cpToAdd.type.find( t => t.code === typeCode);
-      cpToAdd.type = typeObj;
-      //console.log('Updated cp: ' + this.getContactPersonToAdd())
-  }
-
-  getContactPersonToAdd(): any {
+  getPersonToEdit(): any {
     const cp: any = this.tableFormGrp.value.rowsArr[0];
     return cp;
   }
 
   addContactPerson() {
     if (this.tableFormGrp.valid) {
-      const cp = this.getContactPersonToAdd();
-      // *** TODO: remove later, after TYPE fix and set to REQUESTED field
-      if (cp.type.length) {
-        cp.type = {code: 0, value: 'לא נבחר'}
-      }
-      //
+      const typeCodeChosen = this.getPersonToEdit().type;
+      const typeObj = this.submittedDdList.find( t => t.code === typeCodeChosen);
+      this.personToAdd = {...this.getPersonToEdit(), type: typeObj};
 
-      this._messageSrv.addContactPerson(cp);
+      this._messageSrv.addContactPerson(this.personToAdd);
     }
-
-    console.log('contactPerson: ', this.tableFormGrp.value);
   }
 
   removeContactPersonNewRow() {
     this._messageSrv.showContactPersonNewRow(false);
   }
 
+  private getFormGrp(): FormGroup {
+    return this.tableFormGrp;
+  }
+
   ngOnDestroy() {
-    for (const sbs of this.subscriptions) {
-      sbs.unsubscribe();
-    }
+    Utils.unsubscribeAll(this.subscriptions);
   }
 }

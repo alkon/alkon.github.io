@@ -3,6 +3,7 @@ import {IContactPerson} from '@app/model/data/contact-person.model';
 import {MatTable, MatTableDataSource} from '@angular/material/table';
 import {Subscription} from 'rxjs';
 import {MessageService} from '@app/services/message.service';
+import {Utils} from '@app/util/utils';
 
 @Component({
   selector: 'app-contact-persons-list',
@@ -101,8 +102,6 @@ export class ContactPersonsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (const sbs of this.subscriptions) {
-      sbs.unsubscribe();
-    }
+    Utils.unsubscribeAll(this.subscriptions);
   }
 }

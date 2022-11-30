@@ -6,6 +6,7 @@ import {MessageService} from '@app/services/message.service';
 import {ConfirmDialogService} from '@app/shared/confirm-dialog/confirm-dialog.service';
 import {FormGroup} from '@angular/forms';
 import {FormRegisterService} from '@app/services/form-register.service';
+import {Utils} from '@app/util/utils';
 
 @Component({
   selector: 'app-home',
@@ -59,9 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    for (const sbs of this.subscriptions) {
-      sbs.unsubscribe();
-    }
+    Utils.unsubscribeAll(this.subscriptions);
   }
 
 }
