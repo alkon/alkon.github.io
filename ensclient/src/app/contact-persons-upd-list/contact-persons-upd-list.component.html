@@ -18,10 +18,9 @@
             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
               <mat-form-field class="name-column" appearance="fill">
                 <input matInput type="text" formControlName="name">
+                <mat-hint [ngStyle]="controlStyle('name', i)">שדה חובה, אותיות עברית בלבד
+                </mat-hint>
               </mat-form-field>
-              <!--<div *ngIf="element[0]['name'].errors">
-                חובה להזין שם בעברית
-              </div>-->
           </ng-container>
 
           <ng-container matColumnDef="type">
@@ -33,7 +32,7 @@
                               [value]="el.code">{{el.value}}
                   </mat-option>
                 </mat-select>
-
+                <mat-hint [ngStyle]="controlStyle('type', i)">שדה חובה</mat-hint>
               </mat-form-field>
           </ng-container>
 
@@ -42,6 +41,7 @@
             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
               <mat-form-field class="address-column" appearance="fill">
                 <input matInput type="text" formControlName="address">
+                <mat-hint [ngStyle]="controlStyle('address', i)">שדה חובה</mat-hint>
               </mat-form-field>
           </ng-container>
 
@@ -50,13 +50,14 @@
             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
               <mat-form-field class="phone-number-column" appearance="fill">
                 <input matInput type="text" formControlName="phoneNumber">
+                <mat-hint [ngStyle]="controlStyle('phoneNumber', i)">10 ספרות בלבד</mat-hint>
               </mat-form-field>
           </ng-container>
 
           <ng-container matColumnDef="email">
             <th mat-header-cell *matHeaderCellDef>דואר אלקטרוני</th>
             <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="email-column" appearance="fill" class="email-field">
+              <mat-form-field class="email-column" appearance="fill">
                 <input matInput type="text" formControlName="email">
               </mat-form-field>
           </ng-container>

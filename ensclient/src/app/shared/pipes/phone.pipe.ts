@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PhonePipe implements PipeTransform {
 
-  transform(phoneNum: number): unknown {
+  transform(phoneNum: number): string {
     const phoneStr = '0' + phoneNum.toString();
     const phoneStrFmt = phoneStr.slice(0, 3) + '-' + phoneStr.slice(3);
     return phoneStrFmt;

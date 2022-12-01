@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {MessageService} from '@app/services/message.service';
 import {DdListsContentService, IListItem} from '@app/services/dd-lists-content.service';
@@ -37,8 +37,10 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
 
   FORM_NAME = 'tableFormGrp';
   HEBREW_PATTERN = '^[\u0590-\u05FF ]+$';
+  NUMBER_PATTERN_OLD = '\\-?\\d*\\.?\\d{1,2}';
+  NUMBER_PATTERN = '^((\\+91-?)|0)?[0-9]{10}$';
 
-  subscriptions: Subscription[] = [];
+   subscriptions: Subscription[] = [];
 
   constructor(private _tableFb: FormBuilder,
               private _rowFb: FormBuilder,
@@ -82,9 +84,10 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
             [Validators.required, Validators.pattern(this.HEBREW_PATTERN)]),
           type: new FormControl(personToEdit.typeArr, Validators.required),
           phoneNumber: new FormControl(personToEdit.phoneNumber,
-            [Validators.required,
-              Validators.minLength(9), // no leading-zero case
-              Validators.maxLength(10)]), // leading-zero case
+            [Validators.required, Validators.pattern(this.NUMBER_PATTERN),
+              //Validators.minLength(10),
+              //Validators.maxLength(10)
+            ]),
           address: new FormControl(personToEdit.address),
           email: new FormControl(personToEdit.email, [Validators.email]),
           //addButton: new FormControl(null),
@@ -98,11 +101,6 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
 
   get rowsArr(): FormArray {
     return this.tableFormGrp.get('rowsArr') as FormArray;
-  }
-
-  typeArr(index: number = 0): any[] {
-    const array: any[] = this.rowsArr.value(index).type;
-    return array;
   }
 
   getPersonToEdit(): any {
@@ -128,7 +126,27 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
     return this.tableFormGrp;
   }
 
+  public controlValid(controlName: string, index: number) {
+    const formGrp: FormGroup = this.rowsArr.controls[index] as FormGroup;
+    const valid = formGrp.controls[controlName + ''].status === 'VALID';
+    return valid;
+  }
+
+  controlStyle(controlName: string, index: number) {
+     const style = this.controlValid(controlName, index) ? {color: 'black'} : {color: 'red'};
+     return style;
+  }
+
+  public formValid() {
+    return this.tableFormGrp.valid;
+  }
+
   ngOnDestroy() {
     Utils.unsubscribeAll(this.subscriptions);
   }
+
+  // public controlValid(controlName: string, index: number) {
+  //   const valid = this.rowsArr.get(index)[controlName + ''].valid;
+  //   return valid;
+  // }
 }
