@@ -3,6 +3,7 @@
 
   ::ng-deep .mat-form-field-infix {
     width: auto;
+    text-align: right;
   }
 
   ::ng-deep .mat-datepicker-toggle .mat-icon-button {
@@ -52,6 +53,43 @@
     select {
       width: 8em;
     }
+  }
+
+  .name-column, .age-column, .id-column, .address-column {
+    margin-bottom: 0;
+
+    width: 10em;
+    margin-top: -1.9em;
+
+    height: 1em;
+
+    ::ng-deep .mat-form-field-wrapper {
+      width: 10em;
+      margin-top: -1.7em;
+      margin-right: -0.6em;
+    }
+
+    .mat-input-element:disabled {
+      color: black;
+    }
+  }
+
+  .age-column {
+    ::ng-deep .mat-form-field-wrapper {
+      width: 5em;
+    }
+  }
+
+  .id-column {
+    margin-right: -5vw;
+  }
+
+  .age-column {
+    margin-right: -3vw;
+  }
+
+  .address-column {
+    margin-right: -7.8vw;
   }
 
   .details-edit {

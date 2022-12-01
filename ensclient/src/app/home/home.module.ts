@@ -28,6 +28,8 @@ import {ContactPersonsUpdListComponent} from '@app/contact-persons-upd-list/cont
     ContactPersonsComponent,
     ContactPersonsListComponent,
     ContactPersonsUpdListComponent,
+    ReactiveFormsModule,
+    AngularMaterialModule
   ],
 })
 export class HomeModule { }

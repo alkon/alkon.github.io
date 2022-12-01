@@ -1,15 +1,49 @@
 <div class="container-area process-details-container" *ngIf="process">
   <div class="title">ריכוז מידע בתהליך</div>
   <div class="details">
-    <div class="column">
+
+    <form [formGroup]="commonDetailsFormGrp">
+      <div class="row">
+        <span class="column">
+                <mat-label>פרטי מבוטח: </mat-label>
+        </span>
+
+        <span class="column">
+          <mat-form-field class="details name-column">
+            <input matInput type="text" formControlName="nameControl">
+          </mat-form-field>
+        </span>
+
+        <span class="column">
+          <mat-form-field class="details id-column">
+            <input matInput type="text" formControlName="idControl">
+          </mat-form-field>
+        </span>
+
+        <span class="column">
+          <mat-form-field class="details age-column">
+            <input matInput type="text" formControlName="ageControl">
+          </mat-form-field>
+        </span>
+
+        <span class="column">
+          <mat-form-field class="details address-column">
+            <input matInput type="text" formControlName="addressControl">
+          </mat-form-field>
+        </span>
+      </div>
+    </form>
+
+
+    <!--<div class="column">
       <span>פרטי מבוטח: </span>
       <span class="insured-name">{{process?.insured?.firstName}}  {{process?.insured?.lastName}}</span>
-      <span class="insured-age">{{process?.insured?.age}}</span>
       <span class="insured-id">{{process?.insured?.identity}}</span>
+      <span class="insured-age">{{process?.insured?.age}}</span>
       <span class="insured-address">{{process?.insured?.address?.streetName}}, {{process?.insured?.address?.cityName}}</span>
-    </div>
+    </div>-->
 
-    <div class="column row-gap bold">
+    <div class="column bold">
       <span class="insured-name-label">שם</span>
       <span class="insured-id-label">{{identityTypeValue}}</span>
       <span class="insured-age-label">גיל</span>

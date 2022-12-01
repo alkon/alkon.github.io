@@ -1,8 +1,32 @@
-<div *ngIf="(this.processObs$ | async) as process">
+<div *ngIf="process">
 
   <div class="super-claim-details grey-bg">
 
-    <span class="column">
+    <form [formGroup]="homeFormGrp">
+      <div class="row">
+
+        <span class="column">
+          <mat-label class="label">תביעת על:</mat-label>
+          <mat-form-field class="details super-claim-number">
+            <input matInput type="text" formControlName="superClaimNumberControl">
+          </mat-form-field>
+        </span>
+
+        <span class="column">
+          <mat-label class="label">מצב תביעה: </mat-label>
+          <mat-form-field class="details super-claim-status">
+            <input matInput type="text" formControlName="superClaimStatusControl">
+          </mat-form-field>
+        </span>
+
+        <span class="column">
+           <div class="button" (click)="refreshProcess()">רענון תהליך</div>
+        </span>
+      </div>
+    </form>
+
+
+    <!--<span class="column">
       <span>תביעת על: </span>
       <span>{{process?.superClaim?.superClaimNumber}}</span>
     </span>
@@ -12,14 +36,15 @@
       <span>{{process?.superClaim?.superClaimStatus?.value}}</span>
     </span>
 
-    <div class="button" (click)="refreshProcess()">רענון תהליך</div>
+    <div class="button" (click)="refreshProcess()">רענון תהליך</div>-->
   </div>
 
   <app-process-details [process]="process"></app-process-details>
   <app-contact-persons [persons]="process.contactPersons"></app-contact-persons>
   <app-contact-persons-list [persons]="process.contactPersons"></app-contact-persons-list>
 
-  <button (click)="continueProcess()"  [disabled]="existNonValidForm"
-          [ngClass]="existNonValidForm ? 'disabled-button' : 'button'">המשך</button>
+  <button (click)="continueProcess()" [disabled]="existNonValidForm"
+          [ngClass]="existNonValidForm ? 'disabled-button' : 'button'">המשך
+  </button>
 
 </div>

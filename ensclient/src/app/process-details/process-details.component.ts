@@ -22,11 +22,14 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
 
   processDetails: IProcessDetails;
 
+  commonDetailsFormGrp: FormGroup;
   claimDetailsFormGrp: FormGroup;
+
   subscriptions: Subscription[] = [];
 
-  identityTypeValue: string = '';
+  identityTypeValue: string = 'commonDetailsFormGrp';
 
+  COMMON_FORM_NAME = 'commonDetailsFormGrp';
   FORM_NAME = 'claimDetailsFormGrp';
 
   constructor(
@@ -37,7 +40,7 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.createForm();
+    this.createForms();
     this.populateDetails();
 
     this.subscriptions.push(
@@ -56,13 +59,27 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
 
       this._messageSrv.getPrintFormsMsg$().subscribe((print: boolean) => {
          if (print) {
-             console.log('Data of ' + this.FORM_NAME, this.getFormGrp().value);
+           console.log('Data of ' + this.COMMON_FORM_NAME, this.getCommonDetailsFormGrp().value);
+           console.log('Data of ' + this.FORM_NAME, this.getFormGrp().value);
          }
       }),
     );
   }
 
-  createForm() {
+  createForms() {
+    this.commonDetailsFormGrp = this._fb.group({
+      nameControl: [
+        {value: this.process?.insured?.firstName + ' ' +
+            this.process?.insured?.lastName,
+          disabled: true}],
+      ageControl: [{value: this.process?.insured?.age, disabled: true}],
+      idControl: [{value: this.process?.insured?.identity, disabled: true}],
+      addressControl: [
+        {value: this.process?.insured?.address?.streetName + ' ' +
+            this.process?.insured?.address?.cityName,
+          disabled: true}],
+    });
+
     this.claimDetailsFormGrp = this._fb.group({
       superClaimControl: [null, Validators.required],
       claimDateControl: [null, Validators.required],
@@ -105,6 +122,10 @@ export class ProcessDetailsComponent implements OnInit, OnDestroy {
   onSubmittedByChange(event: any) {
       const code = event.value;
       this._messageSrv.checkSubmittedBy(code);
+  }
+
+  private getCommonDetailsFormGrp(): FormGroup {
+    return this.commonDetailsFormGrp;
   }
 
   private getFormGrp(): FormGroup {

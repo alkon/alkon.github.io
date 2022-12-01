@@ -2,6 +2,15 @@
   //display: flex;
   padding: 1em;
   border-radius: 3px;
+
+  ::ng-deep .mat-form-field-infix {
+    width: auto;
+    text-align: right;
+  }
+
+  .mat-input-element:disabled {
+    color: black;
+  }
 }
 
 .column {
@@ -10,8 +19,8 @@
 }
 
 .button {
-  margin-right: 90%;
-  margin-top: -20px;
+  margin-right: 85%;
+  margin-top: -8vh;
   width: 5%;
 }
 
