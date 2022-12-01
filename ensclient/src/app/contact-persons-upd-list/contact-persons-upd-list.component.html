@@ -1,84 +1,77 @@
-<!--<div class="container-area contact-persons-list-container">-->
-  <!--<div class="title">אנשי קשר</div>-->
-  <div class="contact-persons-upd-table">
-    <form [formGroup]="tableFormGrp">
+<div class="contact-persons-upd-table">
+  <form [formGroup]="tableFormGrp">
 
-      <ng-container formArrayName="rowsArr">
-        <table #cpTable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container formArrayName="rowsArr">
+      <table #cpTable mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-          <ng-container matColumnDef="deliveryFlag">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="delivery-flag">
-              <mat-checkbox [checked]="element.deliveryFlag === true" formControlName="deliveryFlag"></mat-checkbox>
-            </td>
-          </ng-container>
+        <ng-container matColumnDef="deliveryFlag">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element" class="delivery-flag">
+            <mat-checkbox [checked]="element.deliveryFlag === true" formControlName="deliveryFlag"></mat-checkbox>
+          </td>
+        </ng-container>
 
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> שם איש קשר</th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="name-column" appearance="fill">
-                <input matInput type="text" formControlName="name">
-                <mat-hint [ngStyle]="controlStyle('name', i)">שדה חובה, אותיות עברית בלבד
-                </mat-hint>
-              </mat-form-field>
-          </ng-container>
+        <ng-container matColumnDef="name">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field class="name-column" appearance="fill">
+              <input matInput type="text" formControlName="name">
+              <mat-hint [ngStyle]="controlStyle('name', i)">שדה חובה, אותיות עברית בלבד
+              </mat-hint>
+            </mat-form-field>
+        </ng-container>
 
-          <ng-container matColumnDef="type">
-            <th mat-header-cell *matHeaderCellDef>סוג</th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="type-column" appearance="fill">
-                <mat-select name="type" formControlName="type" dir="rtl">
-                  <mat-option *ngFor="let el of submittedDdList"
-                              [value]="el.code">{{el.value}}
-                  </mat-option>
-                </mat-select>
-                <mat-hint [ngStyle]="controlStyle('type', i)">שדה חובה</mat-hint>
-              </mat-form-field>
-          </ng-container>
+        <ng-container matColumnDef="type">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field class="type-column" appearance="fill">
+              <mat-select name="type" formControlName="type" dir="rtl">
+                <mat-option *ngFor="let el of submittedDdList"
+                            [value]="el.code">{{el.value}}
+                </mat-option>
+              </mat-select>
+              <mat-hint [ngStyle]="controlStyle('type', i)">שדה חובה</mat-hint>
+            </mat-form-field>
+        </ng-container>
 
-          <ng-container matColumnDef="address">
-            <th mat-header-cell *matHeaderCellDef> כתובת</th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="address-column" appearance="fill">
-                <input matInput type="text" formControlName="address">
-                <mat-hint [ngStyle]="controlStyle('address', i)">שדה חובה</mat-hint>
-              </mat-form-field>
-          </ng-container>
+        <ng-container matColumnDef="address">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field class="address-column" appearance="fill">
+              <input matInput type="text" formControlName="address">
+              <mat-hint [ngStyle]="controlStyle('address', i)">שדה חובה</mat-hint>
+            </mat-form-field>
+        </ng-container>
 
-          <ng-container matColumnDef="phoneNumber">
-            <th mat-header-cell *matHeaderCellDef> טלפון נייד</th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="phone-number-column" appearance="fill">
-                <input matInput type="text" formControlName="phoneNumber">
-                <mat-hint [ngStyle]="controlStyle('phoneNumber', i)">10 ספרות בלבד</mat-hint>
-              </mat-form-field>
-          </ng-container>
+        <ng-container matColumnDef="phoneNumber">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field class="phone-number-column" appearance="fill">
+              <input matInput type="text" formControlName="phoneNumber">
+              <mat-hint [ngStyle]="controlStyle('phoneNumber', i)">10 ספרות בלבד</mat-hint>
+            </mat-form-field>
+        </ng-container>
 
-          <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef>דואר אלקטרוני</th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <mat-form-field class="email-column" appearance="fill">
-                <input matInput type="text" formControlName="email">
-              </mat-form-field>
-          </ng-container>
+        <ng-container matColumnDef="email">
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <mat-form-field class="email-column" appearance="fill">
+              <input matInput type="text" formControlName="email">
+            </mat-form-field>
+        </ng-container>
 
-          <ng-container matColumnDef="addButton">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-            <button mat-button (click)="addContactPerson()" class="btn btn-primary mr-5"> + </button>
-          </ng-container>
+        <ng-container matColumnDef="addButton">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <button mat-button (click)="addContactPerson()" class="btn btn-primary mr-5"> +</button>
+        </ng-container>
 
-          <ng-container matColumnDef="removeButton">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
-              <button mat-button (click)="removeContactPersonNewRow()" class="btn btn-primary mr-5"> - </button>
-          </ng-container>
+        <ng-container matColumnDef="removeButton">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroup]="element">
+            <button mat-button (click)="removeContactPersonNewRow()" class="btn btn-primary mr-5"> -</button>
+        </ng-container>
 
-          <!--<tr mat-header-row class="grey-bg" *matHeaderRowDef="displayedColumns"></tr>-->
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <!--<tr mat-header-row class="grey-bg" *matHeaderRowDef="displayedColumns"></tr>-->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-        </table>
-      </ng-container>
-    </form>
-  </div>
-<!--</div>-->
+      </table>
+    </ng-container>
+  </form>
+</div>
+

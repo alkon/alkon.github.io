@@ -63,6 +63,12 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(
+      this._messageSrv.getRefreshProcessMsg$().subscribe((msg: boolean) => {
+        if (msg) {
+          this.getFormGrp().reset();
+        }
+      }),
+
       this._messageSrv.getPrintFormsMsg$().subscribe((print: boolean) => {
         if (print) {
           console.log('Data of ' + this.FORM_NAME, this.getFormGrp().value);
@@ -144,9 +150,4 @@ export class ContactPersonsUpdListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     Utils.unsubscribeAll(this.subscriptions);
   }
-
-  // public controlValid(controlName: string, index: number) {
-  //   const valid = this.rowsArr.get(index)[controlName + ''].valid;
-  //   return valid;
-  // }
 }
